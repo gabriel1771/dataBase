@@ -22,7 +22,7 @@ $usuario = $sql;
 
 echo $usuario; */
 
-//insere 1 usuario ao banco de dados e retorna todos os campos do mesmo. 
+/* //insere 1 usuario ao banco de dados e retorna todos os campos do mesmo. 
 $aluno = new Usuario();
 $aluno->setDeslogin("Gabriel Reinhardt Dos Reis");
 $aluno->setDessenha("!@#####@!!@#K###");
@@ -30,8 +30,16 @@ $aluno->setDessenha("!@#####@!!@#K###");
 $aluno->insert();
 
 echo $aluno;
+ */
 
 
+ //modifica o login e senha de um usaurio
+
+ $sql = new Usuario();
+ $sql->loadById(1);
+ $sql->update("Rafaela", "!!!!!!!");
+
+ echo $sql;
 
 
 ?>

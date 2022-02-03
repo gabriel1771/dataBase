@@ -8,10 +8,18 @@
 // chamado loadbyid que ao passar o id de um usuario ele carrega já a class(os atributos) com todos os valores do usuario identificado ==== método que retorna todos os 
 // dados dos usuarios em ordem de nome ==== método que trás todos os dados dos usuarios cujo tenha tal caractéres no nome deles e esses caractéres é passado como parâmetro para 
 // poder ser feito a pesquisa e ser retornado os dados ==== método login() que ao passar login and password se estiverem corretos ele retorna os dados do usuario e se não existir 
-// ele estoura uma excessão e futuramente tratar o memo. 
+// ele estoura uma excessão e futuramente tratar o memo. ==== método setData() ele recebe um array e preenche os atributos com o mesmo
 
 
 //insert 
+
+//método insert() ele pega dois valores dos atributos e manda para o banco, onde vai ter uma procedure(função no mysql) que vai inserir os valores na tabela criando um novo 
+// usuario e vai retornar todos os valores do mesmo, então o método vai reeprencher os atributos com os valores retornados usando  o métod serData().
+
+//update
+
+//método update() recebe os dadaos que precisam mudar, no seu processo ele usa o id já carregado nos atributos pra identificar a linha que vai ser alterada usando o método queyP();
+
 
 
 
@@ -54,6 +62,11 @@ class Usuario {
         $this->dtcadastro = $value;
     }
 
+
+    public function __construct($login = "", $password = ""){
+        $this->setDeslogin = $login;
+        $this->setDessenha = $password;
+    }
 
     public function __toString(){
 
@@ -136,6 +149,19 @@ class Usuario {
             
         }
 
+    }
+
+    public function update($login, $password){
+
+        $this->setDeslogin($login) ;
+        $this->setDessenha($password);
+
+        $sql = new Sql();
+        $sql->queryP("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID", array(
+            ':LOGIN' => $this->getDeslogin(),
+            ':PASSWORD' => $this->getDessenha(),
+            ':ID' => $this->getIdusuario()
+        ));  
     }
 
 
