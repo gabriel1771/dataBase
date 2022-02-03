@@ -1,9 +1,19 @@
 <?php
 
-// essa classe ao dar um echo no objeto ela retorna os valores dos atributos ==== que são os valores das colunas da tabela tb_usuario, essa classe também tem um método 
+//todos os métodos giram em torno da tabela definida e suas ligações
+
+//select e gerais
+
+// essa classe ao dar um echo no objeto ela retorna os valores dos atributos que são os valores das colunas da tabela tb_usuario, ==== essa classe também tem um método 
 // chamado loadbyid que ao passar o id de um usuario ele carrega já a class(os atributos) com todos os valores do usuario identificado ==== método que retorna todos os 
 // dados dos usuarios em ordem de nome ==== método que trás todos os dados dos usuarios cujo tenha tal caractéres no nome deles e esses caractéres é passado como parâmetro para 
-// poder ser feito a pesquisa e ser retornado os dados ==== 
+// poder ser feito a pesquisa e ser retornado os dados ==== método login() que ao passar login and password se estiverem corretos ele retorna os dados do usuario e se não existir 
+// ele estoura uma excessão e futuramente tratar o memo. 
+
+
+//insert 
+
+
 
 class Usuario {
 
@@ -67,12 +77,7 @@ class Usuario {
         ));
 
         if(count($results) > 0){
-            $row = $results[0];
-
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+            $this->setData($results);
 
         }
 
@@ -101,17 +106,36 @@ class Usuario {
         ));
 
         if(count($results) > 0){
-            $row = $results[0];
 
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+            $this->setData($results);            
 
         } else{
             throw new Exception("login e/ou senha, invalidos");
             
         }
+    }
+
+    public function setData($data){
+        $row = $data[0];
+        $this->setIdusuario($row['idusuario']);
+        $this->setDeslogin($row['deslogin']);
+        $this->setDessenha($row['dessenha']);
+        $this->setDtcadastro(new DateTime($row['dtcadastro']));
+
+    }
+
+    public function insert(){
+        $sql = new Sql();
+        $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+            ":LOGIN"=>$this->getDeslogin(),
+            ":PASSWORD"=>$this->getDessenha()
+        ) );
+
+        if (count($results) > 0) {
+            $this->setData($results);
+            
+        }
+
     }
 
 
