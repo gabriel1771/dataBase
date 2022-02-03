@@ -5,7 +5,7 @@
 //select e gerais
 
 // essa classe ao dar um echo no objeto ela retorna os valores dos atributos que são os valores das colunas da tabela tb_usuario, ==== essa classe também tem um método 
-// chamado loadbyid que ao passar o id de um usuario ele carrega já a class(os atributos) com todos os valores do usuario identificado ==== método que retorna todos os 
+// chamado loadbyid que ao passar o id de um usuario ele carrega já a class(os atributos) com todos os valores do usuario identificado ==== método getList() que retorna todos os 
 // dados dos usuarios em ordem de nome ==== método que trás todos os dados dos usuarios cujo tenha tal caractéres no nome deles e esses caractéres é passado como parâmetro para 
 // poder ser feito a pesquisa e ser retornado os dados ==== método login() que ao passar login and password se estiverem corretos ele retorna os dados do usuario e se não existir 
 // ele estoura uma excessão e futuramente tratar o memo. ==== método setData() ele recebe um array e preenche os atributos com o mesmo
@@ -16,10 +16,15 @@
 //método insert() ele pega dois valores dos atributos e manda para o banco, onde vai ter uma procedure(função no mysql) que vai inserir os valores na tabela criando um novo 
 // usuario e vai retornar todos os valores do mesmo, então o método vai reeprencher os atributos com os valores retornados usando  o métod serData().
 
+
 //update
 
 //método update() recebe os dadaos que precisam mudar, no seu processo ele usa o id já carregado nos atributos pra identificar a linha que vai ser alterada usando o método queyP();
 
+
+//delete
+
+//
 
 
 
@@ -162,6 +167,20 @@ class Usuario {
             ':PASSWORD' => $this->getDessenha(),
             ':ID' => $this->getIdusuario()
         ));  
+    }
+
+    public function delete(){
+        $sql = new Sql();
+
+        $sql->queryP("DELETE  FROM tb_usuarios WHERE idusuario = :ID", array(
+            ":ID" => $this->getIdusuario()
+        ));
+    
+        $this->setIdusuario(0);
+        $this->setDeslogin("");
+        $this->setDessenha("");
+        $this->setDtcadastro( new DateTime());
+
     }
 
 

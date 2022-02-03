@@ -34,12 +34,29 @@ echo $aluno;
 
 
  //modifica o login e senha de um usaurio
-
+/* 
  $sql = new Usuario();
  $sql->loadById(1);
  $sql->update("Rafaela", "!!!!!!!");
 
  echo $sql;
+ */
+
+ $usuario = new Usuario();
+ $usuario->loadById(6);
+
+ echo json_encode(Usuario::getList());
+
+ echo "<br> <br> ====================================== <br> <br>";
+
+ $usuario->delete();
+
+echo json_encode(Usuario::getList());
+
+echo "<br> <br> ====================================== <br> <br>";
+
+echo $usuario;
+
 
 
 ?>
