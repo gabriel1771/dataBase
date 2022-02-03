@@ -1,5 +1,7 @@
 <?php
 
+
+
 $conn = new PDO("sqlsrv:DataBase=dbphp7;Server=LAPTOP-I5F1UOQG;ConnectionPooling=0", "sa", "root");
 
 $stmt = $conn->prepare("SELECT * FROM tb_usuarios ORDER BY deslogin");

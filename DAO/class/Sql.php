@@ -1,5 +1,8 @@
 <?php
 
+// essa classe se utiliza enviando um camando sql e se tiver que passar parâmentros se passa no comando sql e no segundo argumento um array com chave e valor segundo 
+// os parâmetros. E também se tiver algum retorno do comando sql, temos o método select que retorna tudo em um array prontinho já. 
+
 class SQL extends PDO {
 
     private $conn;
@@ -14,7 +17,7 @@ class SQL extends PDO {
 
         foreach ($parameters as $key => $value) {
 
-            $this->setParam($key, $value);
+            $this->setParam($statment, $key, $value);
 
         }
 
